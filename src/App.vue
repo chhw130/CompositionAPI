@@ -1,26 +1,42 @@
 <template>
   <section class="container">
-    <h2>{{ user.name }}</h2>
+    <h2>{{ fullName }}</h2>
     <h3>{{ user.age }}</h3>
+
+    <button @click="setNewData">Change Inform</button>
+    <div>
+      <input type="text" placeholder="First Name" v-model="firstName" />
+      <input type="text" placeholder="Last Name" v-model="lastName" />
+    </div>
   </section>
 </template>
 
 <script>
-import { reactive } from 'vue';
+import { reactive, ref, computed } from 'vue';
 export default {
   setup() {
     const user = reactive({
       name: 'Hyun',
       age: 26,
     });
+    const firstName = ref('');
+    const lastName = ref('');
 
-    setTimeout(() => {
+    const setNewData = () => {
       user.name = 'Choi';
       user.age = 17;
-    }, 2000);
+    };
+
+    const fullName = computed(function () {
+      return firstName.value + ' ' + lastName.value;
+    });
 
     return {
       user,
+      setNewData,
+      firstName,
+      lastName,
+      fullName,
     };
   },
 };
