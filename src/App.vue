@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { reactive, ref, computed } from 'vue';
+import { reactive, ref, computed, watch } from 'vue';
 export default {
   setup() {
     const user = reactive({
@@ -27,7 +27,11 @@ export default {
       user.age = 17;
     };
 
-    const fullName = computed(function () {
+    watch([firstName, lastName], (newValue, oldValue) => {
+      console.log(newValue, oldValue);
+    });
+
+    const fullName = computed(() => {
       return firstName.value + ' ' + lastName.value;
     });
 
