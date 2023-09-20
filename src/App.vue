@@ -7,6 +7,8 @@
     <div>
       <input type="text" placeholder="First Name" v-model="firstName" />
       <input type="text" placeholder="Last Name" v-model="lastName" />
+      <input ref="numberInput" />
+      <button @click="numberInputHandler"></button>
     </div>
   </section>
 </template>
@@ -21,10 +23,18 @@ export default {
     });
     const firstName = ref('');
     const lastName = ref('');
+    const numberInput = ref(null);
+    const number = ref(0);
 
     const setNewData = () => {
       user.name = 'Choi';
       user.age = 17;
+    };
+
+    const numberInputHandler = () => {
+      number.value = numberInput.value.value;
+
+      console.log(number.value);
     };
 
     watch([firstName, lastName], (newValue, oldValue) => {
@@ -41,6 +51,8 @@ export default {
       firstName,
       lastName,
       fullName,
+      numberInputHandler,
+      numberInput,
     };
   },
 };
