@@ -1,7 +1,38 @@
+<script setup>
+import UserData from './component/UserData.vue';
+import { reactive, ref, computed, watch } from 'vue';
+
+const user = reactive({
+  name: 'Hyun',
+  age: 26,
+});
+const firstName = ref('');
+const lastName = ref('');
+const numberInput = ref(null);
+const number = ref(0);
+
+const setNewData = () => {
+  user.name = 'Choi';
+  user.age = 17;
+};
+
+const numberInputHandler = () => {
+  number.value = numberInput.value.value;
+
+  console.log(number.value);
+};
+
+watch([firstName, lastName], (newValue, oldValue) => {
+  console.log(newValue, oldValue);
+});
+
+const fullName = computed(() => {
+  return firstName.value + ' ' + lastName.value;
+});
+</script>
 <template>
   <section class="container">
-    <h2>{{ fullName }}</h2>
-    <h3>{{ user.age }}</h3>
+    <UserData :fullName="fullName" :age="user.age" />
 
     <button @click="setNewData">Change Inform</button>
     <div>
@@ -9,54 +40,10 @@
       <input type="text" placeholder="Last Name" v-model="lastName" />
       <input ref="numberInput" />
       <button @click="numberInputHandler"></button>
+      <button @click="postQuiz">Post Data</button>
     </div>
   </section>
 </template>
-
-<script>
-import { reactive, ref, computed, watch } from 'vue';
-export default {
-  setup() {
-    const user = reactive({
-      name: 'Hyun',
-      age: 26,
-    });
-    const firstName = ref('');
-    const lastName = ref('');
-    const numberInput = ref(null);
-    const number = ref(0);
-
-    const setNewData = () => {
-      user.name = 'Choi';
-      user.age = 17;
-    };
-
-    const numberInputHandler = () => {
-      number.value = numberInput.value.value;
-
-      console.log(number.value);
-    };
-
-    watch([firstName, lastName], (newValue, oldValue) => {
-      console.log(newValue, oldValue);
-    });
-
-    const fullName = computed(() => {
-      return firstName.value + ' ' + lastName.value;
-    });
-
-    return {
-      user,
-      setNewData,
-      firstName,
-      lastName,
-      fullName,
-      numberInputHandler,
-      numberInput,
-    };
-  },
-};
-</script>
 
 <style>
 * {
